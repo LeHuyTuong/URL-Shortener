@@ -1,0 +1,25 @@
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Build
+target/
+*.class
+
+# Maven
+.mvn/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Agent
+.agent/
+
+# Redis data (local)
+redis_data/
