@@ -1,0 +1,58 @@
+### URL Shortener API Tests
+### IntelliJ HTTP Client / VS Code REST Client
+
+### ============================================
+### 1. Shorten URL
+### ============================================
+POST http://localhost:8080/api/urls/shorten
+Content-Type: application/json
+
+{
+  "longUrl": "https://www.google.com"
+}
+
+### ============================================
+### 2. Shorten Another URL (for testing)
+### ============================================
+POST http://localhost:8080/api/urls/shorten
+Content-Type: application/json
+
+{
+  "longUrl": "https://github.com/LeHuyTuong"
+}
+
+### ============================================
+### 3. Redirect (Click) - Copy shortCode from above
+### Replace {shortCode} with actual code like "br5GHxkKj"
+### ============================================
+GET http://localhost:8080/br5GHxkKA
+
+### ============================================
+### 4. Multiple Clicks (Run 5 times to test analytics)
+### ============================================
+GET http://localhost:8080/br5GHxkKB
+
+###
+GET http://localhost:8080/br5GHxkKC
+
+###
+GET http://localhost:8080/br5GHxkKD
+
+###
+GET http://localhost:8080/br5GHxkKE
+
+###
+GET http://localhost:8080/br5GHxkKF
+
+### ============================================
+### 5. Check H2 Console (open in browser)
+### URL: http://localhost:8080/h2-console
+### JDBC URL: jdbc:h2:mem:urlshort
+### User: sa
+### Password: (empty)
+### ============================================
+
+### After clicks, check Redis:
+### docker exec -it urlshort-redis redis-cli
+### > HGETALL stats
+### > HGETALL url:*

@@ -52,20 +52,26 @@ public class UrlShorteningService {
      * READ (redirect):
      * Cache.get() → HIT? return
      * → MISS? DB.query() → Cache.put() → return
+     * + Async: INCR click count in Redis
      */
     public String getOriginalUrl(String shortCode) {
         // 1. Check cache first
-        return cacheService.get(shortCode)
+        String originalUrl = cacheService.get(shortCode)
                 .orElseGet(() -> {
                     // 2. Cache miss -> query DB
-                    String originalUrl = repository.findById(shortCode)
+                    String url = repository.findById(shortCode)
                             .map(UrlMapping::getOriginalUrl)
                             .orElseThrow(() -> new RuntimeException("Short URL not found: " + shortCode));
 
                     // 3. Populate cache for next time
-                    cacheService.put(shortCode, originalUrl);
+                    cacheService.put(shortCode, url);
 
-                    return originalUrl;
+                    return url;
                 });
+
+        // 4. Async: Increment click count (non-blocking)
+        cacheService.incrementClickCount(shortCode);
+
+        return originalUrl;
     }
 }

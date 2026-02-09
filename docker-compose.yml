@@ -7,7 +7,25 @@ services:
     ports:
       - "6379:6379"
     volumes:
+      # Persist Redis data to Docker volume (survives container restart)
       - redis_data:/data
+    # ============================================================
+    # Redis Persistence: AOF (Append Only File)
+    # ============================================================
+    # Why AOF instead of RDB?
+    # - AOF logs EVERY write command → max 1 second data loss
+    # - RDB snapshots every X minutes → could lose minutes of data
+    #
+    # For URL Shortener analytics (click counts):
+    # - Clicks happen frequently → need frequent persistence
+    # - Losing 5 minutes of clicks = inaccurate analytics
+    # - AOF with "everysec" sync = good balance of performance & durability
+    #
+    # Trade-off:
+    # - AOF file larger than RDB (~2-3x)
+    # - Slightly more disk I/O
+    # - But: data integrity > storage cost for analytics
+    # ============================================================
     command: redis-server --appendonly yes
     restart: unless-stopped
 

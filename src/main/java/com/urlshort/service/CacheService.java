@@ -52,4 +52,49 @@ public class CacheService {
     public void evict(String shortCode) {
         redisTemplate.delete(KEY_PREFIX + shortCode);
     }
+
+    // ==================== Analytics (Redis Hash) ====================
+    private static final String STATS_HASH_KEY = "stats";
+
+    /**
+     * TODO: Anh implement method này
+     * 
+     * Increment click count for a shortCode (Atomic INCR).
+     * 
+     * Gợi ý:
+     * - Dùng redisTemplate.opsForHash() để thao tác với Redis Hash
+     * - Method cần dùng: increment(hashKey, field, delta)
+     * - Tương đương Redis CLI: HINCRBY stats {shortCode} 1
+     */
+    public void incrementClickCount(String shortCode) {
+        redisTemplate.opsForHash().increment(STATS_HASH_KEY, shortCode, 1);
+    }
+
+    /**
+     * TODO: Anh implement method này
+     * 
+     * Get all click stats from Redis Hash.
+     * Returns Map<shortCode, clickCount>
+     * 
+     * Gợi ý:
+     * - Dùng redisTemplate.opsForHash().entries(hashKey)
+     * - Tương đương Redis CLI: HGETALL stats
+     * - Return type: java.util.Map<Object, Object>
+     */
+    public java.util.Map<Object, Object> getAllStats() {
+        return redisTemplate.opsForHash().entries(STATS_HASH_KEY);
+    }
+
+    /**
+     * TODO: Anh implement method này
+     * 
+     * Delete a stat entry after syncing to DB.
+     * 
+     * Gợi ý:
+     * - Dùng redisTemplate.opsForHash().delete(hashKey, field)
+     * - Tương đương Redis CLI: HDEL stats {shortCode}
+     */
+    public void deleteStats(String shortCode) {
+        redisTemplate.opsForHash().delete(STATS_HASH_KEY, shortCode);
+    }
 }

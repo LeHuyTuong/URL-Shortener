@@ -8,8 +8,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * Structure (64-bit):
  * - Bits 63-48: Machine ID (16 bits = 65536 machines)
  * - Bits 47-0: Sequence (48 bits = 281 trillion per machine)
- * 
- * TODO: Anh/Chị implement logic
  */
 public class IdGenerator {
 
