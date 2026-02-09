@@ -2,8 +2,12 @@ package com.urlshort.controller;
 
 import com.urlshort.dto.ShortenRequest;
 import com.urlshort.dto.ShortenResponse;
+import com.urlshort.service.QrCodeService;
 import com.urlshort.service.UrlShorteningService;
+import org.springframework.beans.factory.annotation.Value;
 import jakarta.validation.Valid;
+
+import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +22,16 @@ public class UrlController {
 
     private final UrlShorteningService service;
 
-    public UrlController(UrlShorteningService service) {
+    private final QrCodeService qrCodeService;
+
+    @Value("${app.base-url}")
+    private String baseUrl;
+
+    public UrlController(UrlShorteningService service, QrCodeService qrCodeService) {
         this.service = service;
+        this.qrCodeService = qrCodeService;
     }
 
-    /**
-     * Management API: Shorten URL
-     * POST /api/urls/shorten
-     */
     @PostMapping("/api/urls/shorten")
     public ResponseEntity<ShortenResponse> shorten(@Valid @RequestBody ShortenRequest request) {
         String shortUrl = service.shorten(request.getLongUrl());
@@ -35,15 +41,28 @@ public class UrlController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    /**
-     * Public API: Redirect
-     * GET /{shortCode}
-     */
     @GetMapping("/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
         String originalUrl = service.getOriginalUrl(shortCode);
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(originalUrl))
                 .build();
+    }
+
+    /**
+     * TODO: Anh implement API này
+     * 
+     * Generate QR Code for Short URL
+     * GET /api/urls/{shortCode}/qr
+     * 
+     * Steps:
+     * 1. Reconstruct fullUrl = "http://localhost:8080/" + shortCode
+     * 2. Call qrCodeService.generateQrCode(fullUrl, 300, 300)
+     * 3. Return ResponseEntity.ok(qrImage) (với MediaType.IMAGE_PNG_VALUE)
+     */
+    @GetMapping(value = "/api/urls/{shortCode}/qr", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> generateQrCode(@PathVariable String shortCode) {
+        String fullUrl = baseUrl + "/" + shortCode;
+        return ResponseEntity.ok(qrCodeService.generateQrCode(fullUrl, 300, 300));
     }
 }
