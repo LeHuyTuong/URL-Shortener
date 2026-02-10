@@ -37,7 +37,7 @@ public class AnalyticsSyncScheduler {
     /**
      * TODO: Sync Redis stats to DB every 5 minutes.
      */
-    @Scheduled(fixedRate = 300000) // 5 minutes = 300,000ms
+    @Scheduled(fixedRate = 15000) // 15 seconds for testing
     @Transactional
     public void syncClickStats() {
         Map<Object, Object> stats = cacheService.getAllStats();

@@ -16,7 +16,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Allow React dev server
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5174"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
 
         // Allow all HTTP methods
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
