@@ -109,6 +109,30 @@ last_accessed	timestamp	Most recent access timestamp for staleness detection
 ### 7.3 Analytics Flow
 ![Analytics Flow](images/analytics-flow.png)
 
-### 7.4 QR Code Flow
-*(TODO: Add diagram)*
+### 7.4 QR Code Flow (Generation & Download)
+
+This feature allows users to download a QR code for their shortened link. The challenge is handling file downloads securely without disk I/O.
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Client as React App
+    participant API as Backend (Spring Boot)
+    participant Lib as ZXing Library
+    
+    User->>Client: Click "Download QR"
+    Client->>API: 1. Request QR (GET /api/urls/{code}/qr)
+    
+    API->>Lib: 2. Generate QR Matrix
+    Lib-->>API: 3. Return PNG Bytes (in memory)
+    
+    API-->>Client: 4. Return Image Blob (image/png)
+    
+    Client->>Client: 5. Create Download Link (Blob URL)
+    Client-->>User: 6. Trigger File Download
+```
+
+**How it works:**
+1.  **On-the-fly Generation**: We don't save QR images to disk. We generate them instantly in memory using **ZXing** library.
+2.  **Blob Handling**: The frontend receives binary data (Blob), creates a temporary URL (`blob:http://...`), and triggers a download. This avoids CORS issues that happen with standard `<a>` tags.
 

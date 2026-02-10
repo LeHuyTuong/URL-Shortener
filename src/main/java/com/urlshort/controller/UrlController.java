@@ -1,5 +1,6 @@
 package com.urlshort.controller;
 
+import com.urlshort.dto.AnalyticsResponse;
 import com.urlshort.dto.ShortenRequest;
 import com.urlshort.dto.ShortenResponse;
 import com.urlshort.service.QrCodeService;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 /**
  * REST Controller for URL operations.
@@ -50,19 +52,17 @@ public class UrlController {
     }
 
     /**
-     * TODO: Anh implement API này
-     * 
      * Generate QR Code for Short URL
      * GET /api/urls/{shortCode}/qr
-     * 
-     * Steps:
-     * 1. Reconstruct fullUrl = "http://localhost:8080/" + shortCode
-     * 2. Call qrCodeService.generateQrCode(fullUrl, 300, 300)
-     * 3. Return ResponseEntity.ok(qrImage) (với MediaType.IMAGE_PNG_VALUE)
      */
     @GetMapping(value = "/api/urls/{shortCode}/qr", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> generateQrCode(@PathVariable String shortCode) {
         String fullUrl = baseUrl + "/" + shortCode;
         return ResponseEntity.ok(qrCodeService.generateQrCode(fullUrl, 300, 300));
+    }
+
+    @GetMapping("/api/analytics")
+    public ResponseEntity<List<AnalyticsResponse>> getAnalytics() {
+        return ResponseEntity.ok(service.getAllAnalytics());
     }
 }

@@ -23,3 +23,7 @@ logs/
 
 # Redis data (local)
 redis_data/
+
+# Environment variables
+.env
+frontend/.env.local

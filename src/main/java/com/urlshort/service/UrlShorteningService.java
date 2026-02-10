@@ -2,8 +2,14 @@ package com.urlshort.service;
 
 import com.urlshort.domain.Base62Encoder;
 import com.urlshort.domain.IdGenerator;
+import com.urlshort.dto.AnalyticsResponse;
 import com.urlshort.entity.UrlMapping;
 import com.urlshort.repository.UrlMappingRepository;
+
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +17,12 @@ import org.springframework.stereotype.Service;
  * Service for URL shortening operations.
  * Uses Write-Through caching pattern.
  */
+
 @Service
 public class UrlShorteningService {
 
     private final UrlMappingRepository repository;
+    private final com.urlshort.repository.AnalyticsRepository analyticsRepository;
     private final CacheService cacheService;
     private final IdGenerator idGenerator;
 
@@ -23,9 +31,11 @@ public class UrlShorteningService {
 
     public UrlShorteningService(
             UrlMappingRepository repository,
+            com.urlshort.repository.AnalyticsRepository analyticsRepository,
             CacheService cacheService,
             @Value("${app.machine-id:1}") int machineId) {
         this.repository = repository;
+        this.analyticsRepository = analyticsRepository;
         this.cacheService = cacheService;
         this.idGenerator = new IdGenerator(machineId);
     }
@@ -44,7 +54,6 @@ public class UrlShorteningService {
 
         // Write-Through: Also put in cache
         cacheService.put(shortCode, longUrl);
-
         return baseUrl + "/" + shortCode;
     }
 
@@ -73,5 +82,21 @@ public class UrlShorteningService {
         cacheService.incrementClickCount(shortCode);
 
         return originalUrl;
+    }
+
+    /**
+     * Get all analytics data with URL mappings.
+     */
+    public List<AnalyticsResponse> getAllAnalytics() {
+        return analyticsRepository.findAll().stream()
+                .map(analytics -> {
+                    String shortCode = analytics.getShortCode();
+                    String shortUrl = baseUrl + "/" + shortCode;
+                    String originalUrl = repository.findById(shortCode)
+                            .map(UrlMapping::getOriginalUrl)
+                            .orElse("N/A");
+                    return new AnalyticsResponse(shortCode, shortUrl, originalUrl, analytics.getClickCount());
+                })
+                .collect(Collectors.toList());
     }
 }
