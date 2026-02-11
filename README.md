@@ -11,10 +11,6 @@ Tôi muốn hiểu cách các dịch vụ như Bitly hoạt động phía sau, �
 - Làm sao generate short codes duy nhất?
 - Caching hoạt động như thế nào?
 - Làm sao track analytics mà không làm chậm hệ thống?
-
-**Live Demo**: [https://my-url-shortener.vercel.app](link) *(nếu có)*  
-**Video Demo**: [YouTube 3-min walkthrough](link) *(HIGHLY RECOMMENDED cho fresher!)*
-
 ---
 
 ## Features

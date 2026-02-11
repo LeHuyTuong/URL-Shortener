@@ -1,10 +1,10 @@
 function Result({ data }) {
     // data sẽ có dạng: { shortUrl: "...", shortCode: "..." }
-    const link = data.shortUrl;
-    const qrCode = data.shortCode;
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-
-    const qrUrl = `${apiBaseUrl}/api/urls/${qrCode}/qr`;
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+    const shortCode = data.shortCode;
+    const link = apiBaseUrl ? `${apiBaseUrl}/${shortCode}` : `${window.location.origin}/${shortCode}`;
+    const qrCode = shortCode;
+    const qrUrl = apiBaseUrl ? `${apiBaseUrl}/api/urls/${qrCode}/qr` : `/api/urls/${qrCode}/qr`;
 
     const downloadQr = async () => {
         try {

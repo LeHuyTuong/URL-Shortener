@@ -2,11 +2,12 @@ import { useState } from 'react';
 
 function UrlForm({ onSuccess }) {
     const [longUrl, setLongUrl] = useState('');
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(apiBaseUrl + `/api/urls/shorten`, {
+            const apiUrl = apiBaseUrl ? `${apiBaseUrl}/api/urls/shorten` : '/api/urls/shorten';
+            const response = await fetch(apiUrl, {
                 method: 'POST', // method
                 headers: {
                     'Content-Type': 'application/json', // báo server là client gửi json
