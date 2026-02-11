@@ -15,8 +15,11 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
 
-        // Allow React dev server
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        // Allow React dev server and Vercel production
+        config.setAllowedOrigins(Arrays.asList(
+            "http://localhost:5173",
+            "https://url-shortener-tuong.vercel.app"
+        ));
 
         // Allow all HTTP methods
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
