@@ -12,6 +12,7 @@ Tôi muốn hiểu cách các dịch vụ như Bitly hoạt động phía sau, �
 - Caching hoạt động như thế nào?
 - Làm sao track analytics mà không làm chậm hệ thống?
 ---
+<img width="1912" height="899" alt="image" src="https://github.com/user-attachments/assets/ac40c200-709a-42f6-8273-1b69c4db6458" />
 
 ## Features
 
