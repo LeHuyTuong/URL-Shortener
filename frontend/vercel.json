@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://urlshort.tuongtruyen.io.vn/api/:path*"
+      "destination": "https://urlshort-backend.loca.lt/api/:path*"
     },
     {
       "source": "/:code([a-zA-Z0-9]+)",
-      "destination": "https://urlshort.tuongtruyen.io.vn/:code"
+      "destination": "https://urlshort-backend.loca.lt/:code"
     },
     {
       "source": "/(.*)",
