@@ -1,0 +1,20 @@
+[build]
+builder = "DOCKERFILE"
+
+[deploy]
+numReplicas = 1
+
+[[services]]
+name = "backend"
+path = "."
+dockerfile = "Dockerfile"
+[services.env]
+PORT = "8080"
+SPRING_PROFILES_ACTIVE = "prod"
+
+[[services]]
+name = "frontend"
+path = "frontend"
+dockerfile = "Dockerfile"
+[services.env]
+PORT = "80"

@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+  backend:
+    build: .
+    container_name: urlshort-backend
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - APP_BASE_URL=https://7e02-163-61-111-120.ngrok-free.app
+    depends_on:
+      - redis
+    restart: unless-stopped
+
   redis:
     image: redis:7-alpine
     container_name: urlshort-redis
@@ -8,23 +21,6 @@ services:
       - "6380:6379" 
     volumes:
       - redis_data:/data
-    # ============================================================
-    # Redis Persistence: AOF (Append Only File)
-    # ============================================================
-    # Why AOF instead of RDB?
-    # - AOF logs EVERY write command → max 1 second data loss
-    # - RDB snapshots every X minutes → could lose minutes of data
-    #
-    # For URL Shortener analytics (click counts):
-    # - Clicks happen frequently → need frequent persistence
-    # - Losing 5 minutes of clicks = inaccurate analytics
-    # - AOF with "everysec" sync = good balance of performance & durability
-    #
-    # Trade-off:
-    # - AOF file larger than RDB (~2-3x)
-    # - Slightly more disk I/O
-    # - But: data integrity > storage cost for analytics
-    # ============================================================
     command: redis-server --appendonly yes
     restart: unless-stopped
 

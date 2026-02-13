@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: urlshort-backend
+    runtime: docker
+    plan: free
+    envVars:
+      - key: APP_BASE_URL
+        value: https://urlshort-backend.onrender.com
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:h2:mem:urlshortdb
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+    healthCheckPath: /
+    autoDeploy: true
+
+version: "1"
