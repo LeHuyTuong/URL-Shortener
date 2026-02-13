@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://url-shortener-production-8c62.up.railway.app/api/:path*"
+      "destination": "https://tuongurl.up.railway.app/api/:path*"
     },
     {
       "source": "/:code([a-zA-Z0-9]+)",
-      "destination": "https://url-shortener-production-8c62.up.railway.app/:code"
+      "destination": "https://tuongurl.up.railway.app/:code"
     },
     {
       "source": "/(.*)",
