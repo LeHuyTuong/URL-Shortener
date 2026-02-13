@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://urlshort-backend.loca.lt/api/:path*"
+      "destination": "https://rich-laws-marry.loca.lt/api/:path*"
     },
     {
       "source": "/:code([a-zA-Z0-9]+)",
-      "destination": "https://urlshort-backend.loca.lt/:code"
+      "destination": "https://rich-laws-marry.loca.lt/:code"
     },
     {
       "source": "/(.*)",
