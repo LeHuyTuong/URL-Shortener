@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://7e02-163-61-111-120.ngrok-free.app/api/:path*"
+      "destination": "https://url-shortener-cbtn.onrender.com/api/:path*"
     },
     {
       "source": "/:code([a-zA-Z0-9]+)",
-      "destination": "https://7e02-163-61-111-120.ngrok-free.app/:code"
+      "destination": "https://url-shortener-cbtn.onrender.com/:code"
     },
     {
       "source": "/(.*)",
