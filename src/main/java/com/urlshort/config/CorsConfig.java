@@ -16,9 +16,11 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Allow React dev server and Vercel production
-        config.setAllowedOrigins(Arrays.asList(
-            "http://localhost:5173",
-            "https://url-shortener-tuong.vercel.app"
+        // Sử dụng allowedOriginPatterns để hỗ trợ regex cho Vercel preview URLs
+        config.setAllowedOriginPatterns(Arrays.asList(
+            "http://localhost:*",                                    // Local dev (bất kỳ port nào)
+            "https://url-shortener-tuong.vercel.app",               // Production chính
+            "https://url-shortener-tuong-*.vercel.app"              // Vercel preview deployments
         ));
 
         // Allow all HTTP methods
