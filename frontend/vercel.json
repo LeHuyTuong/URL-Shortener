@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://d69aee9a31d1ba.lhr.life/api/:path*"
+      "destination": "https://7e02-163-61-111-120.ngrok-free.app/api/:path*"
     },
     {
       "source": "/:code([a-zA-Z0-9]+)",
-      "destination": "https://d69aee9a31d1ba.lhr.life/:code"
+      "destination": "https://7e02-163-61-111-120.ngrok-free.app/:code"
     },
     {
       "source": "/(.*)",

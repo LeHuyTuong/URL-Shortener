@@ -9,7 +9,7 @@ services:
     environment:
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
-      - APP_BASE_URL=https://d69aee9a31d1ba.lhr.life
+      - APP_BASE_URL=https://7e02-163-61-111-120.ngrok-free.app
     depends_on:
       - redis
     restart: unless-stopped
