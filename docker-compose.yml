@@ -9,7 +9,7 @@ services:
     environment:
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
-      - APP_BASE_URL=https://url-shortener-api.tuongtruyen.io.vn
+      - APP_BASE_URL=https://d69aee9a31d1ba.lhr.life
     depends_on:
       - redis
     restart: unless-stopped
