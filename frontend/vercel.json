@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://url-shortener-cbtn.onrender.com/api/:path*"
+      "destination": "http://163.61.111.120:8081/api/:path*"
     },
     {
       "source": "/:code([a-zA-Z0-9]+)",
-      "destination": "https://url-shortener-cbtn.onrender.com/:code"
+      "destination": "http://163.61.111.120:8081/:code"
     },
     {
       "source": "/(.*)",

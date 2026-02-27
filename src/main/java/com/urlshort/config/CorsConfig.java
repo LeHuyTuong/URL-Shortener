@@ -24,8 +24,8 @@ public class CorsConfig {
         // Sử dụng allowedOriginPatterns để hỗ trợ regex cho Vercel preview URLs
         config.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost:*",                                    // Local dev (bất kỳ port nào)
-            "https://url-shortener-tuong.vercel.app",               // Production chính
-            "https://url-shortener-tuong-*.vercel.app"              // Vercel preview deployments
+            "https://url-shortener-lb41.vercel.app",               // Production chính
+            "https://*.vercel.app"                                 // Vercel preview deployments
         ));
 
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
