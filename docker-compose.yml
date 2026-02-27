@@ -9,7 +9,7 @@ services:
     environment:
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
-      - APP_BASE_URL=https://7e02-163-61-111-120.ngrok-free.app
+      - APP_BASE_URL=http://163.61.111.120:8081
     depends_on:
       - redis
     restart: unless-stopped
@@ -18,10 +18,23 @@ services:
     image: redis:7-alpine
     container_name: urlshort-redis
     ports:
-      - "6380:6379" 
+      - "6380:6379"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://163.61.111.120:8081
+    container_name: urlshort-frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
     restart: unless-stopped
 
 volumes:

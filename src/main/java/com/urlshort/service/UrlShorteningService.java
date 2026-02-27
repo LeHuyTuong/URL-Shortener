@@ -4,6 +4,7 @@ import com.urlshort.domain.Base62Encoder;
 import com.urlshort.domain.IdGenerator;
 import com.urlshort.dto.AnalyticsResponse;
 import com.urlshort.entity.UrlMapping;
+import com.urlshort.exception.ShortUrlNotFoundException;
 import com.urlshort.repository.UrlMappingRepository;
 
 import java.util.List;
@@ -70,7 +71,7 @@ public class UrlShorteningService {
                     // 2. Cache miss -> query DB
                     String url = repository.findById(shortCode)
                             .map(UrlMapping::getOriginalUrl)
-                            .orElseThrow(() -> new RuntimeException("Short URL not found: " + shortCode));
+                            .orElseThrow(() -> new ShortUrlNotFoundException(shortCode));
 
                     // 3. Populate cache for next time
                     cacheService.put(shortCode, url);
