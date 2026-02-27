@@ -8,7 +8,7 @@ function Dashboard() {
     const [loading, setLoading] = useState(true);
     //Vì ban đầu component chưa có data → đang loading → nên true, không phải null.
     const [error, setError] = useState(null); // ban đầu chưa có lỗi
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
+
 
     // useEffect để gọi fetchAnalytics khi component mount
     useEffect(() => {
@@ -20,7 +20,7 @@ function Dashboard() {
         setLoading(true);
         // 2. Gọi fetch(`${apiBaseUrl}/api/analytics`)
         try {
-            const apiUrl = apiBaseUrl ? `${apiBaseUrl}/api/analytics` : '/api/analytics';
+            const apiUrl = '/api/analytics';
             const response = await fetch(apiUrl);
             // 3. Kiểm tra response.ok
             if (!response.ok) {
