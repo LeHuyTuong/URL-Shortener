@@ -9,7 +9,7 @@ services:
     environment:
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
-      - APP_BASE_URL=https://url-shortener-lb41.vercel.app
+      - APP_BASE_URL=https://url-shortener-tuong.vercel.app
     depends_on:
       - redis
     restart: unless-stopped
