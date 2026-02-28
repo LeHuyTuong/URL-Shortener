@@ -1,4 +1,4 @@
-function Result({ data }) {
+9]99999999999999999999999999999999function Result({ data }) {
     // data sẽ có dạng: { shortUrl: "...", shortCode: "..." }
     const shortCode = data.shortCode;
     const link = `${window.location.origin}/${shortCode}`;

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+fetch('https://url-shortener-tuong.vercel.app/api/urls/shorten', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ longUrl: 'https://github.com' })
+})
+.then(res => res.json())
+.then(console.log)
+.catch(console.error);
+</script>
+</body>
+</html>

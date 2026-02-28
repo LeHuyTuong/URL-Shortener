@@ -1,12 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "http://163.61.111.120:8081/api/:path*"
-    },
-    {
-      "source": "/:code([a-zA-Z0-9]+)",
-      "destination": "http://163.61.111.120:8081/:code"
+      "source": "/:code([a-zA-Z0-9]{5,10})",
+      "destination": "/api/:code"
     },
     {
       "source": "/(.*)",
